@@ -13,7 +13,7 @@ namespace GodWillHelpMe.Permissions
         {
             if (context.User == null)
             {
-                return;
+                return ;
             }
             var permissionss = context.User.Claims.Where(x => x.Type == "Permission" &&
                                                                 x.Value == requirement.Permission &&
