@@ -1,23 +1,27 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
+﻿using GodWillHelpMe.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace GodWillHelpMe.Permissions
 {
-    public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
+    internal class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {
-        public PermissionAuthorizationHandler() { }
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
+
+        public PermissionAuthorizationHandler()
+        {
+
+        }
+
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
             if (context.User == null)
             {
-                return ;
+                return;
             }
             var permissionss = context.User.Claims.Where(x => x.Type == "Permission" &&
-                                                                x.Value == requirement.Permission &&
-                                                                x.Issuer == "LOCAL AUTHORITY");
+                                                            x.Value == requirement.Permission &&
+                                                            x.Issuer == "LOCAL AUTHORITY");
             if (permissionss.Any())
             {
                 context.Succeed(requirement);
