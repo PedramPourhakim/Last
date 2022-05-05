@@ -1,0 +1,23 @@
+﻿@page
+@model GodWillHelpMe.Pages.ProductModel
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@using Constants
+<h1>Product Management</h1>
+<br />
+@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Permissions.Products.Create)).Result.Succeeded)
+{
+    <button class="btn btn-success">Create</button>
+}
+@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Permissions.Products.View)).Result.Succeeded)
+{
+    <button class="btn btn-info">View</button>
+}
+@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Permissions.Products.Edit)).Result.Succeeded)
+{
+    <button class="btn btn-warning">Modify</button>
+}
+@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Permissions.Products.Delete)).Result.Succeeded)
+{
+    <button class="btn btn-danger">Delete</button>
+}
